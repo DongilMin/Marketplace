@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingVertical="8dp">
+
+    <!-- Reason -->
+    <TextView
+        android:id="@+id/text_reason"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="@color/text_primary"
+        app:layout_constraintEnd_toStartOf="@id/chip_severity"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Exceeding speed limit by 5-10 km/h" />
+
+    <!-- Severity -->
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip_severity"
+        style="@style/Widget.DrivingCoach.Chip"
+        android:layout_width="72dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:chipBackgroundColor="@color/severity_minor"
+        app:layout_constraintBottom_toBottomOf="@id/text_reason"
+        app:layout_constraintEnd_toStartOf="@id/text_points"
+        app:layout_constraintTop_toTopOf="@id/text_reason"
+        tools:text="Minor" />
+
+    <!-- Points -->
+    <TextView
+        android:id="@+id/text_points"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAppearance="?attr/textAppearanceBody2"
+        android:textColor="@color/status_fail"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/text_reason"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/text_reason"
+        tools:text="-5" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

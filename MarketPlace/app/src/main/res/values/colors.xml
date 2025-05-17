@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Material Design 3 Inspired Colors -->
+    <color name="primary">#6366F1</color>        <!-- Indigo 500 -->
+    <color name="primary_variant">#4F46E5</color> <!-- Indigo 600 -->
+    <color name="secondary">#0EA5E9</color>      <!-- Sky 500 -->
+    <color name="secondary_variant">#0284C7</color> <!-- Sky 600 -->
+
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="background">#F9FAFB</color>    <!-- Gray 50 -->
+    <color name="surface">#FFFFFF</color>
+
+    <!-- Text Colors -->
+    <color name="text_primary">#111827</color>   <!-- Gray 900 -->
+    <color name="text_secondary">#6B7280</color> <!-- Gray 500 -->
+    <color name="text_hint">#9CA3AF</color>      <!-- Gray 400 -->
+
+    <!-- Score Colors -->
+    <color name="score_excellent">#22C55E</color> <!-- Green 500 -->
+    <color name="score_good">#10B981</color>     <!-- Emerald 500 -->
+    <color name="score_average">#FBBF24</color>  <!-- Amber 400 -->
+    <color name="score_needs_work">#F97316</color> <!-- Orange 500 -->
+    <color name="score_poor">#EF4444</color>     <!-- Red 500 -->
+
+    <!-- Status Colors -->
+    <color name="status_pass">#22C55E</color>    <!-- Green 500 -->
+    <color name="status_fail">#EF4444</color>    <!-- Red 500 -->
+    <color name="status_disqualified">#B91C1C</color> <!-- Red 700 -->
+
+    <!-- Severity Colors -->
+    <color name="severity_minor">#FBBF24</color> <!-- Amber 400 -->
+    <color name="severity_major">#F97316</color> <!-- Orange 500 -->
+    <color name="severity_critical">#DC2626</color> <!-- Red 600 -->
+
+    <!-- Component Colors -->
+    <color name="card_background">#FFFFFF</color>
+    <color name="chip_background">#F3F4F6</color> <!-- Gray 100 -->
+    <color name="divider">#E5E7EB</color>       <!-- Gray 200 -->
+    <color name="background_light">#F9FAFB</color> <!-- Gray 50 -->
+
+    <!-- Badge Colors -->
+    <color name="badge_green_bg">#DCFCE7</color> <!-- Green 100 -->
+    <color name="badge_green_text">#166534</color> <!-- Green 800 -->
+    <color name="badge_yellow_bg">#FEF3C7</color> <!-- Amber 100 -->
+    <color name="badge_yellow_text">#92400E</color> <!-- Amber 800 -->
+    <color name="badge_red_bg">#FEE2E2</color>  <!-- Red 100 -->
+    <color name="badge_red_text">#991B1B</color> <!-- Red 800 -->
+    <color name="badge_outline">#E5E7EB</color> <!-- Gray 200 -->
 </resources>

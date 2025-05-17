@@ -51,4 +51,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+    // ConstraintLayout 최신 버전 사용
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
+    // Material Components 최신 버전 사용
+    implementation("com.google.android.material:material:1.10.0")
 }
