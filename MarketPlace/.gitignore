@@ -1,15 +1,38 @@
+# === Android Studio/IntelliJ ===
+.idea/
 *.iml
-.gradle
-/local.properties
-/.idea/caches
-/.idea/libraries
-/.idea/modules.xml
-/.idea/workspace.xml
-/.idea/navEditor.xml
-/.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
+
+# === Gradle ===
+.gradle/
+build/
+**/build/
 local.properties
+
+# === NDK/C++ Related ===
+.cxx/
+.externalNativeBuild/
+
+# === macOS/Windows/Linux System Files ===
+.DS_Store
+Thumbs.db
+
+# === Captures/Test Artifacts ===
+captures/
+output.json
+
+# === IDE-specific ===
+*.ipr
+*.iws
+
+# === Jetpack Compose preview cache ===
+.idea/assetWizardSettings.xml
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/misc.xml
+.idea/codeStyles/
+
+# === Misc ===
+*.log
