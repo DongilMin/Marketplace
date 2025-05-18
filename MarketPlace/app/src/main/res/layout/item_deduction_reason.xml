@@ -22,13 +22,15 @@
     <!-- Severity -->
     <com.google.android.material.chip.Chip
         android:id="@+id/chip_severity"
-        style="@style/Widget.DrivingCoach.Chip"
         android:layout_width="72dp"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textColor="@color/white"
+        android:textSize="12sp"
+        android:minHeight="48dp"
         app:chipBackgroundColor="@color/severity_minor"
+        app:chipMinHeight="48dp"
         app:layout_constraintBottom_toBottomOf="@id/text_reason"
         app:layout_constraintEnd_toStartOf="@id/text_points"
         app:layout_constraintTop_toTopOf="@id/text_reason"

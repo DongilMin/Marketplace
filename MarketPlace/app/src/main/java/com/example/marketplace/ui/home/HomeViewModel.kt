@@ -10,7 +10,7 @@ import java.util.Locale
 
 /**
  * ViewModel for the Home screen
- * Provides data about the most recent driving session
+ * Provides data about the most recent driving session and all sessions
  */
 class HomeViewModel : ViewModel() {
 
@@ -21,6 +21,12 @@ class HomeViewModel : ViewModel() {
         value = FakeDrivingData.getMostRecentSession()
     }
     val latestSession: LiveData<DrivingSession> = _latestSession
+
+    // LiveData for all sessions (sorted by date, most recent first)
+    private val _allSessions = MutableLiveData<List<DrivingSession>>().apply {
+        value = FakeDrivingData.drivingSessions.sortedByDescending { it.date }
+    }
+    val allSessions: LiveData<List<DrivingSession>> = _allSessions
 
     // LiveData for formatted date
     private val _formattedDate = MutableLiveData<String>().apply {
@@ -34,13 +40,39 @@ class HomeViewModel : ViewModel() {
     }
     val hasAnySessions: LiveData<Boolean> = _hasAnySessions
 
+    // LiveData for average score
+    private val _averageScore = MutableLiveData<Int>().apply {
+        value = FakeDrivingData.getAverageOverallScore()
+    }
+    val averageScore: LiveData<Int> = _averageScore
+
     /**
-     * Refreshes the latest session data
+     * Refreshes all session data
      */
     fun refreshLatestSession() {
         val latestSession = FakeDrivingData.getMostRecentSession()
         _latestSession.value = latestSession
         _formattedDate.value = dateFormat.format(latestSession.date)
         _hasAnySessions.value = FakeDrivingData.drivingSessions.isNotEmpty()
+        _allSessions.value = FakeDrivingData.drivingSessions.sortedByDescending { it.date }
+        _averageScore.value = FakeDrivingData.getAverageOverallScore()
+    }
+
+    /**
+     * Gets the recent sessions (last 4 sessions)
+     */
+    fun getRecentSessions(): List<DrivingSession> {
+        return _allSessions.value?.take(4) ?: emptyList()
+    }
+
+    /**
+     * Gets sessions for chart display (last 7 sessions)
+     */
+    fun getChartData(): List<Pair<String, Float>> {
+        val sessions = _allSessions.value?.take(7) ?: emptyList()
+        return sessions.reversed().map { session ->
+            val dayFormat = SimpleDateFormat("EEE", Locale.getDefault())
+            Pair(dayFormat.format(session.date), session.overallScore.toFloat())
+        }
     }
 }

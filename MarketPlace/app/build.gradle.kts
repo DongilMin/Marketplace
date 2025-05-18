@@ -56,4 +56,12 @@ dependencies {
 
     // Material Components 최신 버전 사용
     implementation("com.google.android.material:material:1.10.0")
+    // Chart library
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    // Circle ImageView for profile picture
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    // Optional: For better animations and material components
+    implementation("com.google.android.material:material:1.10.0")
 }
