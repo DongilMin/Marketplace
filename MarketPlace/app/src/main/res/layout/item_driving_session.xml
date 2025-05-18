@@ -1,107 +1,162 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="8dp"
+    android:layout_marginBottom="12dp"
     app:cardCornerRadius="12dp"
-    app:cardElevation="2dp">
+    app:cardElevation="1dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <!-- Session Date -->
-        <TextView
-            android:id="@+id/text_session_date"
+        <!-- Date and Time Section -->
+        <LinearLayout
+            android:id="@+id/layout_date_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBody1"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/text_session_score"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="May 15, 2025" />
-
-        <!-- Session Duration -->
-        <TextView
-            android:id="@+id/text_session_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceBody2"
-            android:textColor="@color/text_secondary"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_session_date"
-            tools:text="45 min" />
-
-        <!-- Score -->
-        <TextView
-            android:id="@+id/text_session_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?attr/textAppearanceHeadline2"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="85"
-            tools:textColor="@color/score_good" />
-
-        <!-- Pass/Fail and Disqualified Status Row -->
-        <LinearLayout
-            android:id="@+id/layout_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@id/text_session_duration">
+            app:layout_constraintEnd_toStartOf="@id/layout_score"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <!-- Pass/Fail Chip -->
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_pass_fail"
-                style="@style/Widget.DrivingCoach.Chip"
+            <ImageView
+                android:id="@+id/icon_calendar"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_dashboard_black_24dp"
+                app:tint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/text_session_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:textColor="@color/white"
-                app:chipBackgroundColor="@color/status_pass"
-                tools:text="Passed" />
+                android:layout_marginStart="4dp"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="Today" />
 
-            <!-- Disqualified Chip (only visible if disqualified) -->
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_disqualified"
-                style="@style/Widget.DrivingCoach.Chip"
+            <ImageView
+                android:id="@+id/icon_clock"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:src="@drawable/ic_notifications_black_24dp"
+                app:tint="@color/text_secondary" />
+
+            <TextView
+                android:id="@+id/text_session_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/disqualified"
-                android:textColor="@color/white"
-                android:visibility="gone"
-                app:chipBackgroundColor="@color/status_disqualified"
-                tools:visibility="visible" />
+                android:layout_marginStart="4dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp"
+                tools:text="9:30 AM" />
         </LinearLayout>
 
-        <!-- Divider -->
-        <View
-            android:id="@+id/divider"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="16dp"
-            android:background="@color/divider"
-            app:layout_constraintTop_toBottomOf="@id/layout_status" />
-
-        <!-- Details Button -->
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/button_view_details"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
+        <!-- Duration and Status Badges -->
+        <LinearLayout
+            android:id="@+id/layout_badges"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="@string/view_details"
-            android:textAllCaps="false"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toStartOf="@id/layout_score"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_date_time">
+
+            <!-- Duration Badge -->
+            <TextView
+                android:id="@+id/badge_duration"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/badge_outline_background"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                tools:text="32 min" />
+
+            <!-- Status Badge -->
+            <TextView
+                android:id="@+id/badge_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/badge_green_background"
+                android:paddingStart="8dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
+                android:textColor="@color/badge_green_text"
+                android:textSize="12sp"
+                tools:text="Excellent" />
+        </LinearLayout>
+
+        <!-- Score Section -->
+        <LinearLayout
+            android:id="@+id/layout_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/icon_chevron"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/text_session_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/text_primary"
+                    android:textSize="24sp"
+                    android:textStyle="bold"
+                    tools:text="91" />
+
+                <ImageView
+                    android:id="@+id/icon_trend"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:layout_marginStart="4dp"
+                    android:src="@drawable/ic_home_black_24dp"
+                    app:tint="@color/score_excellent" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Score"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <!-- Chevron Icon -->
+        <ImageView
+            android:id="@+id/icon_chevron"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_dashboard_black_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/divider" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_hint" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

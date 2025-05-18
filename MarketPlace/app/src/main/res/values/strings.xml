@@ -51,4 +51,14 @@
     <!-- Empty states -->
     <string name="empty_dashboard">No driving data available</string>
     <string name="empty_session_details">Session details not available</string>
+
+    <string name="app_title">DriveScore</string>
+    <string name="score_history">Your 7-day AI score history</string>
+    <string name="current_score">Current Score</string>
+    <string name="view_feedback">View Feedback</string>
+    <string name="view_all">View All</string>
+    <string name="tab_sessions">Sessions</string>
+    <string name="tab_insights">Insights</string>
+    <string name="insights_coming_soon">Insights coming soon</string>
+    <string name="score_label">Score</string>
 </resources>

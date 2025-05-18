@@ -1,162 +1,240 @@
 package com.example.marketplace.ui.home
 
+import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marketplace.R
+import com.example.marketplace.data.DrivingSession
 import com.example.marketplace.databinding.FragmentHomeBinding
 import com.example.marketplace.util.ScoreUtil
-import java.text.SimpleDateFormat
-import java.util.Locale
+import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.Description
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.google.android.material.tabs.TabLayout
 
-/**
- * Fragment for the Home screen
- * Displays welcome message, latest driving session, and action buttons
- */
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var homeViewModel: HomeViewModel
-    private val dateFormat = SimpleDateFormat("MMMM d, yyyy", Locale.getDefault())
+    private lateinit var sessionAdapter: DrivingSessionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Initialize ViewModel
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
-
-        // Inflate layout
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
-        // Set up observers
-        setupObservers()
-
-        // Set up button click listeners
+        setupChart()
+        setupTabLayout()
+        setupRecyclerView()
+        observeViewModel()
         setupClickListeners()
 
         return binding.root
     }
 
-    /**
-     * Sets up LiveData observers to update UI when data changes
-     */
-    private fun setupObservers() {
-        // Observe whether any sessions exist
-        homeViewModel.hasAnySessions.observe(viewLifecycleOwner) { hasAnySessions ->
-            // Show/hide appropriate UI groups based on whether sessions exist
-            binding.groupHasSessions.visibility = if (hasAnySessions) View.VISIBLE else View.GONE
-            binding.groupNoSessions.visibility = if (hasAnySessions) View.GONE else View.VISIBLE
+    private fun setupChart() {
+        val lineChart = binding.lineChart
+
+        // Get chart data from ViewModel
+        val scoreData = homeViewModel.getChartData()
+
+        if (scoreData.isNotEmpty()) {
+            setupLineChart(lineChart, scoreData)
+        } else {
+            // Hide chart if no data
+            lineChart.visibility = View.GONE
+        }
+    }
+
+    private fun setupLineChart(chart: LineChart, data: List<Pair<String, Float>>) {
+        // Prepare data entries
+        val entries = data.mapIndexed { index, (_, score) ->
+            Entry(index.toFloat(), score)
         }
 
-        // Observe latest session data
+        // Create dataset
+        val dataSet = LineDataSet(entries, "Score").apply {
+            color = ContextCompat.getColor(requireContext(), R.color.primary)
+            setCircleColor(ContextCompat.getColor(requireContext(), R.color.primary))
+            lineWidth = 3f
+            circleRadius = 5f
+            setDrawCircleHole(false)
+            valueTextSize = 0f // Hide values on points
+            setDrawFilled(true)
+            fillDrawable = ContextCompat.getDrawable(requireContext(), R.drawable.chart_fill_gradient)
+            mode = LineDataSet.Mode.CUBIC_BEZIER
+            setDrawValues(false)
+        }
+
+        // Set chart data
+        chart.data = LineData(dataSet)
+
+        // Customize chart appearance
+        chart.apply {
+            description = Description().apply { isEnabled = false }
+            setTouchEnabled(true)
+            isDragEnabled = false
+            setScaleEnabled(false)
+            setPinchZoom(false)
+            legend.isEnabled = false
+
+            // Customize X axis
+            xAxis.apply {
+                position = XAxis.XAxisPosition.BOTTOM
+                setDrawGridLines(false)
+                setDrawAxisLine(false)
+                textColor = ContextCompat.getColor(requireContext(), R.color.text_secondary)
+                textSize = 12f
+                valueFormatter = IndexAxisValueFormatter(data.map { it.first })
+                granularity = 1f
+            }
+
+            // Customize left Y axis
+            axisLeft.apply {
+                setDrawGridLines(true)
+                gridColor = ContextCompat.getColor(requireContext(), R.color.divider)
+                setDrawAxisLine(false)
+                textColor = ContextCompat.getColor(requireContext(), R.color.text_secondary)
+                textSize = 12f
+                axisMinimum = 60f
+                axisMaximum = 100f
+            }
+
+            // Hide right Y axis
+            axisRight.isEnabled = false
+
+            // Animation
+            animateY(1000, Easing.EaseInOutCubic)
+
+            // Refresh
+            invalidate()
+        }
+    }
+
+    private fun setupTabLayout() {
+        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                when (tab?.position) {
+                    0 -> {
+                        // Sessions tab
+                        binding.layoutSessionsHeader.visibility = View.VISIBLE
+                        binding.recyclerSessions.visibility = View.VISIBLE
+                        binding.layoutInsights.visibility = View.GONE
+                    }
+                    1 -> {
+                        // Insights tab
+                        binding.layoutSessionsHeader.visibility = View.GONE
+                        binding.recyclerSessions.visibility = View.GONE
+                        binding.layoutInsights.visibility = View.VISIBLE
+                    }
+                }
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+        })
+    }
+
+    private fun setupRecyclerView() {
+        binding.recyclerSessions.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            // Add item spacing
+            addItemDecoration(object : androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(outRect: android.graphics.Rect, view: View, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
+                    outRect.bottom = resources.getDimensionPixelSize(R.dimen.item_spacing)
+                }
+            })
+        }
+
+        sessionAdapter = DrivingSessionAdapter(emptyList()) { session ->
+            navigateToSessionDetails(session)
+        }
+        binding.recyclerSessions.adapter = sessionAdapter
+    }
+
+    private fun observeViewModel() {
         homeViewModel.latestSession.observe(viewLifecycleOwner) { session ->
-            // Only update UI if session exists
             session?.let {
-                // Set date and duration
-                binding.textSessionDate.text = dateFormat.format(it.date)
-                binding.textSessionDuration.text = "${it.durationMinutes} ${getString(R.string.minutes_short)}"
-
-                // Set pass/fail status chip
-                val statusText = if (it.isDisqualified) {
-                    getString(R.string.disqualified)
-                } else if (it.isPassed) {
-                    getString(R.string.passed)
-                } else {
-                    getString(R.string.failed)
-                }
-
-                binding.chipStatus.text = statusText
-
-                // Set chip background color based on status
-                val chipColor = when {
-                    it.isDisqualified -> resources.getColor(R.color.status_disqualified, null)
-                    it.isPassed -> resources.getColor(R.color.status_pass, null)
-                    else -> resources.getColor(R.color.status_fail, null)
-                }
-                binding.chipStatus.chipBackgroundColor = android.content.res.ColorStateList.valueOf(chipColor)
-
-                // Set score and its color
-                binding.textScoreValue.text = it.overallScore.toString()
-                binding.textScoreValue.setTextColor(ScoreUtil.getColorForScore(requireContext(), it.overallScore))
-
-                // Set rating text and color
-                val ratingText = ScoreUtil.getRatingForScore(it.overallScore)
-                binding.textScoreRating.text = ratingText
-                binding.textScoreRating.setTextColor(ScoreUtil.getColorForScore(requireContext(), it.overallScore))
-
-                // Set category scores
-                binding.textSpeedScore.text = it.speedScore.toString()
-                binding.textSpeedScore.setTextColor(ScoreUtil.getColorForScore(requireContext(), it.speedScore))
-
-                binding.textTurningScore.text = it.turningScore.toString()
-                binding.textTurningScore.setTextColor(ScoreUtil.getColorForScore(requireContext(), it.turningScore))
-
-                binding.textBrakingScore.text = it.brakingScore.toString()
-                binding.textBrakingScore.setTextColor(ScoreUtil.getColorForScore(requireContext(), it.brakingScore))
-
-                // Set feedback text
-                binding.textFeedbackContent.text = it.instructorFeedback
+                binding.textCurrentScore.text = it.overallScore.toString()
+                binding.textCurrentScore.setTextColor(
+                    ScoreUtil.getColorForScore(requireContext(), it.overallScore)
+                )
             }
+        }
+
+        homeViewModel.allSessions.observe(viewLifecycleOwner) { sessions ->
+            // Show only first 4 sessions for home screen
+            val recentSessions = sessions.take(4)
+            sessionAdapter = DrivingSessionAdapter(recentSessions) { session ->
+                navigateToSessionDetails(session)
+            }
+            binding.recyclerSessions.adapter = sessionAdapter
         }
     }
 
-    /**
-     * Sets up click listeners for buttons
-     */
     private fun setupClickListeners() {
-        // View Dashboard button - navigates to Dashboard screen
-        binding.buttonViewDashboard.setOnClickListener {
+        binding.buttonViewFeedback.setOnClickListener {
+            // Navigate to feedback/notification screen
+            findNavController().navigate(R.id.navigation_notifications)
+        }
+
+        binding.textViewAll.setOnClickListener {
             findNavController().navigate(R.id.navigation_dashboard)
         }
 
-        // View History button - also navigates to Dashboard screen
-        binding.buttonViewHistory.setOnClickListener {
-            findNavController().navigate(R.id.navigation_dashboard)
-        }
-
-        // Start New Session buttons (both in with-sessions and no-sessions views)
-        binding.buttonStartSession.setOnClickListener {
-            // In a real app, would navigate to session creation flow
-            // For demo, just show a toast
-            showFeatureNotAvailableMessage()
-        }
-
-        binding.buttonStartNewSession.setOnClickListener {
-            showFeatureNotAvailableMessage()
-        }
-
-        // Make latest session card clickable to view details
-        binding.cardLatestSession.setOnClickListener {
-            homeViewModel.latestSession.value?.let { session ->
-                val bundle = Bundle().apply {
-                    putString("sessionId", session.id)
+        binding.bottomNavigation.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.navigation_home -> true
+                R.id.navigation_dashboard -> {
+                    findNavController().navigate(R.id.navigation_dashboard)
+                    true
                 }
-                findNavController().navigate(R.id.action_navigation_home_to_sessionDetailsFragment, bundle)
+                R.id.navigation_notifications -> {
+                    findNavController().navigate(R.id.navigation_notifications)
+                    true
+                }
+                else -> false
             }
         }
     }
 
-    /**
-     * Shows a message indicating a feature is not available in the demo
-     */
-    private fun showFeatureNotAvailableMessage() {
-        com.google.android.material.snackbar.Snackbar.make(
-            binding.root,
-            "This feature is not available in the demo",
-            com.google.android.material.snackbar.Snackbar.LENGTH_SHORT
-        ).show()
+    private fun navigateToSessionDetails(session: DrivingSession) {
+        val bundle = Bundle().apply {
+            putString("sessionId", session.id)
+        }
+        findNavController().navigate(
+            R.id.action_navigation_home_to_sessionDetailsFragment,
+            bundle
+        )
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+}
+
+// Extension function to get color safely
+private fun Fragment.getCompatColor(colorRes: Int): Int {
+    return ContextCompat.getColor(requireContext(), colorRes)
 }
