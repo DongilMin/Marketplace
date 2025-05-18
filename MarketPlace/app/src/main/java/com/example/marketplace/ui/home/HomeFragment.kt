@@ -1,7 +1,6 @@
 package com.example.marketplace.ui.home
 
 import android.graphics.Color
-import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,12 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.marketplace.R
 import com.example.marketplace.data.DrivingSession
 import com.example.marketplace.databinding.FragmentHomeBinding
+import com.example.marketplace.ui.dashboard.DrivingSessionAdapter
 import com.example.marketplace.util.ScoreUtil
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.Description
 import com.github.mikephil.charting.components.XAxis
-import com.github.mikephil.charting.components.YAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -160,7 +159,12 @@ class HomeFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             // Add item spacing
             addItemDecoration(object : androidx.recyclerview.widget.RecyclerView.ItemDecoration() {
-                override fun getItemOffsets(outRect: android.graphics.Rect, view: View, parent: androidx.recyclerview.widget.RecyclerView, state: androidx.recyclerview.widget.RecyclerView.State) {
+                override fun getItemOffsets(
+                    outRect: android.graphics.Rect,
+                    view: View,
+                    parent: androidx.recyclerview.widget.RecyclerView,
+                    state: androidx.recyclerview.widget.RecyclerView.State
+                ) {
                     outRect.bottom = resources.getDimensionPixelSize(R.dimen.item_spacing)
                 }
             })
@@ -201,21 +205,6 @@ class HomeFragment : Fragment() {
         binding.textViewAll.setOnClickListener {
             findNavController().navigate(R.id.navigation_dashboard)
         }
-
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> true
-                R.id.navigation_dashboard -> {
-                    findNavController().navigate(R.id.navigation_dashboard)
-                    true
-                }
-                R.id.navigation_notifications -> {
-                    findNavController().navigate(R.id.navigation_notifications)
-                    true
-                }
-                else -> false
-            }
-        }
     }
 
     private fun navigateToSessionDetails(session: DrivingSession) {
@@ -232,9 +221,4 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
-}
-
-// Extension function to get color safely
-private fun Fragment.getCompatColor(colorRes: Int): Int {
-    return ContextCompat.getColor(requireContext(), colorRes)
 }
