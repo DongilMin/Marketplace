@@ -128,7 +128,7 @@ class DashboardFragment : Fragment() {
         val bundle = Bundle().apply {
             putString("sessionId", session.id)
         }
-        findNavController().navigate(R.id.action_navigation_dashboard_to_sessionDetailsFragment, bundle)
+        findNavController().navigate(R.id.action_marketplace_to_sessionDetails, bundle)
     }
 
     override fun onDestroyView() {

@@ -23,15 +23,18 @@ class MainActivity : AppCompatActivity() {
         val navView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
+        // 올바른 코드
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
-                R.id.navigation_dashboard,
-                R.id.navigation_notifications
+                R.id.navigation_marketplace,
+                R.id.navigation_statistics,
+                R.id.navigation_guide
             )
         )
 
         supportActionBar?.hide()
         navView.setupWithNavController(navController)
+
     }
 }

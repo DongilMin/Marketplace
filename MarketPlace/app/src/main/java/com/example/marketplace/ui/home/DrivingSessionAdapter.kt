@@ -93,7 +93,7 @@ class DrivingSessionAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_driving_session, parent, false)
+            .inflate(R.layout.item_driving_session_card, parent, false)
         return ViewHolder(view)
     }
 

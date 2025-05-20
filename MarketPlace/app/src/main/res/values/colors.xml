@@ -52,5 +52,8 @@
     <color name="badge_yellow_text">#92400E</color>   <!-- Yellow 800 -->
     <color name="badge_red_bg">#FEE2E2</color>        <!-- Red 100 -->
     <color name="badge_red_text">#991B1B</color>      <!-- Red 800 -->
-    <color name="badge_outline">#E5E7EB</color>       <!-- Gray 200 -->
+    <color name="badge_outline">#D1D5DB</color>       <!-- Gray 300 -->      <!-- Gray 200 -->
+
+
+
 </resources>
