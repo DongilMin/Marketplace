@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.marketplace.R
 import com.example.marketplace.databinding.FragmentHomeBinding
+import com.example.marketplace.ui.dashboard.DrivingSessionAdapter
 
 /**
  * 홈 화면 프래그먼트
