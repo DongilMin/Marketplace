@@ -1,4 +1,4 @@
-package com.example.marketplace.ui.dashboard
+package com.example.marketplace.ui.marketplace
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,6 +11,8 @@ import com.example.marketplace.R
 import com.example.marketplace.data.DeductionReason
 import com.example.marketplace.data.DrivingSession
 import com.example.marketplace.databinding.FragmentSessionDetailsBinding
+import com.example.marketplace.ui.dashboard.DeductionReasonAdapter
+import com.example.marketplace.ui.dashboard.SessionDetailsViewModel
 import com.example.marketplace.util.ScoreUtil
 import java.text.SimpleDateFormat
 import java.util.Locale

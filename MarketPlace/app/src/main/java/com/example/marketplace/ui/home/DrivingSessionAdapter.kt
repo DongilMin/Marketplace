@@ -77,6 +77,7 @@ class DrivingSessionAdapter(
             textScore.setTextColor(ScoreUtil.getColorForScore(itemView.context, session.overallScore))
 
             // Set trend icon color (show as positive for demo)
+            iconTrend.setImageResource(R.drawable.ic_trending_up)
             iconTrend.setColorFilter(ContextCompat.getColor(itemView.context, R.color.score_excellent))
 
             // Set click listener
