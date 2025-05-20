@@ -1,78 +1,92 @@
 package com.example.marketplace.ui.home
 
+import android.content.Context
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.marketplace.data.DrivingSession
+import com.example.marketplace.R
 import com.example.marketplace.data.FakeDrivingData
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 /**
- * ViewModel for the Home screen
- * Provides data about the most recent driving session and all sessions
+ * 홈 화면 ViewModel
+ * - 사용자의 전체 진행 상황 데이터를 제공
+ * - 총 연습 횟수, 평균 점수, 합격률 계산
+ * - 점수에 따른 색상 결정 로직 포함
  */
 class HomeViewModel : ViewModel() {
 
-    private val dateFormat = SimpleDateFormat("MMMM d, yyyy", Locale.getDefault())
-
-    // LiveData for the latest session
-    private val _latestSession = MutableLiveData<DrivingSession>().apply {
-        value = FakeDrivingData.getMostRecentSession()
+    // 총 세션 수
+    private val _totalSessions = MutableLiveData<Int>().apply {
+        value = FakeDrivingData.drivingSessions.size
     }
-    val latestSession: LiveData<DrivingSession> = _latestSession
+    val totalSessions: LiveData<Int> = _totalSessions
 
-    // LiveData for all sessions (sorted by date, most recent first)
-    private val _allSessions = MutableLiveData<List<DrivingSession>>().apply {
-        value = FakeDrivingData.drivingSessions.sortedByDescending { it.date }
-    }
-    val allSessions: LiveData<List<DrivingSession>> = _allSessions
-
-    // LiveData for formatted date
-    private val _formattedDate = MutableLiveData<String>().apply {
-        value = dateFormat.format(FakeDrivingData.getMostRecentSession().date)
-    }
-    val formattedDate: LiveData<String> = _formattedDate
-
-    // LiveData for whether any sessions exist
-    private val _hasAnySessions = MutableLiveData<Boolean>().apply {
-        value = FakeDrivingData.drivingSessions.isNotEmpty()
-    }
-    val hasAnySessions: LiveData<Boolean> = _hasAnySessions
-
-    // LiveData for average score
+    // 평균 점수
     private val _averageScore = MutableLiveData<Int>().apply {
         value = FakeDrivingData.getAverageOverallScore()
     }
     val averageScore: LiveData<Int> = _averageScore
 
+    // 합격률 (70점 이상인 세션의 비율)
+    private val _passRate = MutableLiveData<Int>().apply {
+        val totalSessions = FakeDrivingData.drivingSessions.size
+        val passedSessions = FakeDrivingData.getPassedSessions().size
+        value = if (totalSessions > 0) {
+            (passedSessions * 100) / totalSessions
+        } else {
+            0
+        }
+    }
+    val passRate: LiveData<Int> = _passRate
+
     /**
-     * Refreshes all session data
+     * 점수에 따른 색상을 반환합니다.
+     *
+     * @param context 컨텍스트 (색상 리소스 접근용)
+     * @param score 점수 (0-100)
+     * @return 점수에 맞는 색상
      */
-    fun refreshLatestSession() {
-        val latestSession = FakeDrivingData.getMostRecentSession()
-        _latestSession.value = latestSession
-        _formattedDate.value = dateFormat.format(latestSession.date)
-        _hasAnySessions.value = FakeDrivingData.drivingSessions.isNotEmpty()
-        _allSessions.value = FakeDrivingData.drivingSessions.sortedByDescending { it.date }
+    fun getScoreColor(context: Context, score: Int): Int {
+        return when {
+            score >= 90 -> ContextCompat.getColor(context, R.color.score_excellent)
+            score >= 80 -> ContextCompat.getColor(context, R.color.score_good)
+            score >= 70 -> ContextCompat.getColor(context, R.color.score_average)
+            score >= 60 -> ContextCompat.getColor(context, R.color.score_needs_work)
+            else -> ContextCompat.getColor(context, R.color.score_poor)
+        }
+    }
+
+    /**
+     * 합격률에 따른 색상을 반환합니다.
+     *
+     * @param context 컨텍스트 (색상 리소스 접근용)
+     * @param passRate 합격률 (0-100%)
+     * @return 합격률에 맞는 색상
+     */
+    fun getPassRateColor(context: Context, passRate: Int): Int {
+        return when {
+            passRate >= 80 -> ContextCompat.getColor(context, R.color.score_excellent)
+            passRate >= 60 -> ContextCompat.getColor(context, R.color.score_good)
+            passRate >= 40 -> ContextCompat.getColor(context, R.color.score_average)
+            passRate >= 20 -> ContextCompat.getColor(context, R.color.score_needs_work)
+            else -> ContextCompat.getColor(context, R.color.score_poor)
+        }
+    }
+
+    /**
+     * 데이터를 새로고침합니다.
+     */
+    fun refreshData() {
+        _totalSessions.value = FakeDrivingData.drivingSessions.size
         _averageScore.value = FakeDrivingData.getAverageOverallScore()
-    }
 
-    /**
-     * Gets the recent sessions (last 4 sessions)
-     */
-    fun getRecentSessions(): List<DrivingSession> {
-        return _allSessions.value?.take(4) ?: emptyList()
-    }
-
-    /**
-     * Gets sessions for chart display (last 7 sessions)
-     */
-    fun getChartData(): List<Pair<String, Float>> {
-        val sessions = _allSessions.value?.take(7) ?: emptyList()
-        return sessions.reversed().map { session ->
-            val dayFormat = SimpleDateFormat("EEE", Locale.getDefault())
-            Pair(dayFormat.format(session.date), session.overallScore.toFloat())
+        val totalSessions = FakeDrivingData.drivingSessions.size
+        val passedSessions = FakeDrivingData.getPassedSessions().size
+        _passRate.value = if (totalSessions > 0) {
+            (passedSessions * 100) / totalSessions
+        } else {
+            0
         }
     }
 }

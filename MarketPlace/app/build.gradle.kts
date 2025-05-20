@@ -26,20 +26,22 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     kotlinOptions {
         jvmTarget = "11"
     }
+
     buildFeatures {
         viewBinding = true
     }
 }
 
 dependencies {
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
@@ -48,20 +50,15 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     implementation(libs.androidx.navigation.fragment.ktx)
     implementation(libs.androidx.navigation.ui.ktx)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-    // ConstraintLayout 최신 버전 사용
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
-    // Material Components 최신 버전 사용
-    implementation("com.google.android.material:material:1.10.0")
-    // Chart library
+    // Chart library for line charts
     implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // Circle ImageView for profile picture
     implementation("de.hdodenhof:circleimageview:3.1.0")
 
-    // Optional: For better animations and material components
-    implementation("com.google.android.material:material:1.10.0")
+    // Testing
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.junit)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

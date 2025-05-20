@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="12dp">
+
+    <!-- 순위 표시 -->
+    <TextView
+        android:id="@+id/text_rank"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/badge_outline_background"
+        android:gravity="center"
+        android:text="1"
+        android:textColor="@color/primary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        tools:text="1" />
+
+    <!-- 감점 사유 -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_deduction_reason"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="속도 제한 위반 (5-10km/h 초과)"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary"
+            android:textStyle="bold"
+            tools:text="속도 제한 위반 (5-10km/h 초과)" />
+
+        <TextView
+            android:id="@+id/text_occurrence_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="3회 발생"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary"
+            android:layout_marginTop="2dp"
+            tools:text="3회 발생" />
+    </LinearLayout>
+
+    <!-- 총 감점 -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/text_total_points_deducted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-15"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/status_fail"
+            tools:text="-15" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="점"
+            android:textSize="12sp"
+            android:textColor="@color/text_secondary" />
+    </LinearLayout>
+</LinearLayout>

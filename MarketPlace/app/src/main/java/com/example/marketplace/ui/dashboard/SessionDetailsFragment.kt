@@ -95,7 +95,7 @@ class SessionDetailsFragment : Fragment() {
     private fun updateUI(session: DrivingSession) {
         // Set title and date
         binding.textSessionTitle.text = getString(R.string.session_details)
-        binding.textSessionDate.text = "${dateFormat.format(session.date)} • ${session.durationMinutes} ${getString(R.string.minutes_short)}"
+        binding.textSessionDate.text = "${dateFormat.format(session.date)} • ${session.durationMinutes}분"
 
         // Set examination result
         val resultText = if (session.isDisqualified) {

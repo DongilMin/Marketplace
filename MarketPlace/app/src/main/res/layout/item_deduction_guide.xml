@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 헤더 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp">
+
+            <!-- 감점 사유 -->
+            <TextView
+                android:id="@+id/text_deduction_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="속도 제한 위반 (5-10km/h 초과)"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                tools:text="속도 제한 위반 (5-10km/h 초과)" />
+
+            <!-- 감점 점수 -->
+            <TextView
+                android:id="@+id/text_deduction_points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/badge_red_background"
+                android:paddingStart="12dp"
+                android:paddingTop="6dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="6dp"
+                android:text="-5점"
+                android:textColor="@color/badge_red_text"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                tools:text="-5점" />
+        </LinearLayout>
+
+        <!-- 설명 -->
+        <TextView
+            android:id="@+id/text_deduction_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="도로의 제한속도를 5-10km/h 초과하여 주행하는 경우입니다. 일반적으로 경미한 위반으로 분류되지만, 반복될 경우 추가 감점이 있을 수 있습니다."
+            android:textSize="14sp"
+            android:textColor="@color/text_secondary"
+            android:lineSpacingExtra="2dp"
+            android:layout_marginBottom="12dp"
+            tools:text="도로의 제한속도를 5-10km/h 초과하여 주행하는 경우입니다." />
+
+        <!-- 심각도 및 카테고리 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <!-- 심각도 -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_severity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="경미"
+                android:textSize="12sp"
+                app:chipBackgroundColor="@color/severity_minor"
+                android:textColor="@color/white"
+                app:chipMinHeight="32dp"
+                tools:text="경미" />
+
+            <!-- 카테고리 -->
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_category"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="속도 제어"
+                android:textSize="12sp"
+                app:chipBackgroundColor="@color/chip_background"
+                android:textColor="@color/text_primary"
+                app:chipMinHeight="32dp"
+                tools:text="속도 제어" />
+
+            <!-- 공백 채우기 -->
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
+            <!-- 예시 버튼 -->
+            <TextView
+                android:id="@+id/button_view_examples"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="예시 보기"
+                android:textSize="12sp"
+                android:textColor="@color/primary"
+                android:textStyle="bold"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:drawableEnd="@drawable/ic_chevron_right"
+                android:drawableTint="@color/primary"
+                android:gravity="center_vertical"
+                tools:text="예시 보기" />
+        </LinearLayout>
+
+        <!-- 확장 가능한 예시 섹션 (초기에는 숨김) -->
+        <LinearLayout
+            android:id="@+id/layout_examples"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:padding="12dp"
+            android:background="@color/background_light"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="상황 예시"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_primary"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/text_examples"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="• 60km/h 제한 도로에서 65km/h로 주행\n• 학교 앞 30km/h 구간에서 35km/h로 주행\n• 고속도로 진입로에서 제한속도 미준수"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                android:lineSpacingExtra="4dp"
+                tools:text="• 60km/h 제한 도로에서 65km/h로 주행\n• 학교 앞 30km/h 구간에서 35km/h로 주행" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

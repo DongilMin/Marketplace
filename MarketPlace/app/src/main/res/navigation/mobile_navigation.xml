@@ -5,39 +5,58 @@
     android:id="@+id/mobile_navigation"
     app:startDestination="@+id/navigation_home">
 
+    <!-- 홈 화면 -->
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.example.marketplace.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home">
+        android:label="홈"
+        tools:layout="@layout/fragment_home" />
+
+    <!-- 마켓플레이스 대시보드 -->
+    <fragment
+        android:id="@+id/navigation_marketplace"
+        android:name="com.example.marketplace.ui.marketplace.MarketplaceFragment"
+        android:label="마켓플레이스"
+        tools:layout="@layout/fragment_marketplace">
         <action
-            android:id="@+id/action_navigation_home_to_sessionDetailsFragment"
+            android:id="@+id/action_marketplace_to_sessionDetails"
             app:destination="@id/sessionDetailsFragment" />
     </fragment>
 
+    <!-- 내 통계 -->
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.marketplace.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard">
+        android:id="@+id/navigation_statistics"
+        android:name="com.example.marketplace.ui.statistics.StatisticsFragment"
+        android:label="내 통계"
+        tools:layout="@layout/fragment_statistics" />
+
+    <!-- 가이드 -->
+    <fragment
+        android:id="@+id/navigation_guide"
+        android:name="com.example.marketplace.ui.guide.GuideFragment"
+        android:label="가이드"
+        tools:layout="@layout/fragment_guide">
         <action
-            android:id="@+id/action_navigation_dashboard_to_sessionDetailsFragment"
-            app:destination="@id/sessionDetailsFragment" />
+            android:id="@+id/action_guide_to_deductionGuide"
+            app:destination="@id/deductionGuideFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.marketplace.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
-
+    <!-- 세션 상세 -->
     <fragment
         android:id="@+id/sessionDetailsFragment"
-        android:name="com.example.marketplace.ui.dashboard.SessionDetailsFragment"
-        android:label="@string/session_details"
+        android:name="com.example.marketplace.ui.marketplace.SessionDetailsFragment"
+        android:label="세션 상세"
         tools:layout="@layout/fragment_session_details">
         <argument
             android:name="sessionId"
             app:argType="string" />
     </fragment>
+
+    <!-- 감점 항목 사전 -->
+    <fragment
+        android:id="@+id/deductionGuideFragment"
+        android:name="com.example.marketplace.ui.guide.DeductionGuideFragment"
+        android:label="감점 항목 사전"
+        tools:layout="@layout/fragment_deduction_guide" />
+
 </navigation>

@@ -10,43 +10,31 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.marketplace.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Enable edge-to-edge display
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navView = binding.navView
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
 
-        // Define top level destinations - these won't show the back button
+        // 올바른 코드
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.navigation_home,
-                R.id.navigation_dashboard,
-                R.id.navigation_notifications
+                R.id.navigation_marketplace,
+                R.id.navigation_statistics,
+                R.id.navigation_guide
             )
         )
 
-        // Remove action bar since we're using our own toolbar in fragments
         supportActionBar?.hide()
-
-        // Setup bottom navigation with nav controller
         navView.setupWithNavController(navController)
-    }
 
-    /**
-     * Handle back button navigation
-     */
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_activity_main)
-        return navController.navigateUp() || super.onSupportNavigateUp()
     }
 }

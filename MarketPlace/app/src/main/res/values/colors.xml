@@ -45,7 +45,15 @@
     <color name="divider">#E5E7EB</color>
     <color name="background_light">#F9FAFB</color>
 
+    <!-- Badge Colors -->
     <color name="badge_green_bg">#DCFCE7</color>      <!-- Green 100 -->
     <color name="badge_green_text">#166534</color>    <!-- Green 800 -->
-    <!-- 나머지 색상들... -->
+    <color name="badge_yellow_bg">#FEF3C7</color>     <!-- Yellow 100 -->
+    <color name="badge_yellow_text">#92400E</color>   <!-- Yellow 800 -->
+    <color name="badge_red_bg">#FEE2E2</color>        <!-- Red 100 -->
+    <color name="badge_red_text">#991B1B</color>      <!-- Red 800 -->
+    <color name="badge_outline">#D1D5DB</color>       <!-- Gray 300 -->      <!-- Gray 200 -->
+
+
+
 </resources>

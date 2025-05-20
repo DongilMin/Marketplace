@@ -1,4 +1,4 @@
-package com.example.marketplace.ui.home
+package com.example.marketplace.ui.dashboard
 
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +12,12 @@ import com.example.marketplace.data.DrivingSession
 import com.example.marketplace.util.ScoreUtil
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.Locale
 
+/**
+ * Adapter for displaying driving session items in a RecyclerView
+ * This adapter is shared between home and dashboard fragments
+ */
 class DrivingSessionAdapter(
     private val sessionList: List<DrivingSession>,
     private val onItemClicked: (DrivingSession) -> Unit
@@ -73,7 +76,7 @@ class DrivingSessionAdapter(
             textScore.text = session.overallScore.toString()
             textScore.setTextColor(ScoreUtil.getColorForScore(itemView.context, session.overallScore))
 
-            // Set trend icon color (always show as positive for demo)
+            // Set trend icon color (show as positive for demo)
             iconTrend.setColorFilter(ContextCompat.getColor(itemView.context, R.color.score_excellent))
 
             // Set click listener
@@ -90,7 +93,7 @@ class DrivingSessionAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_driving_session, parent, false)
+            .inflate(R.layout.item_driving_session_card, parent, false)
         return ViewHolder(view)
     }
 

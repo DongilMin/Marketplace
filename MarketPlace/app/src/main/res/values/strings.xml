@@ -1,19 +1,33 @@
 <resources>
-    <string name="app_name">Driving Coach</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Feedback</string>
+    <string name="app_name">AI 도로주행 연습</string>
+    <string name="title_home">홈</string>
+    <string name="title_marketplace">마켓플레이스</string>
+    <string name="title_statistics">내 통계</string>
+    <string name="title_guide">가이드</string>
 
-    <!-- Home Screen -->
-    <string name="welcome_title">Welcome to Driving Coach</string>
-    <string name="welcome_subtitle">Track your road test progress and get professional feedback</string>
-    <string name="latest_session">Latest Driving Session</string>
-    <string name="view_dashboard">View Dashboard</string>
-    <string name="start_new_session">Start New Session</string>
-    <string name="view_history">View History</string>
-    <string name="no_sessions_yet">No driving sessions yet</string>
-    <string name="start_first_session">Start your first driving session to see your progress</string>
-    <string name="minutes_short">min</string>
+    <!-- 홈 화면 -->
+    <string name="ai_driving_practice">AI 도로주행 연습 시스템</string>
+    <string name="app_description">인공지능이 실시간으로 분석하는 스마트한 도로주행 연습 플랫폼입니다. 정확한 피드백으로 합격률을 높이세요!</string>
+    <string name="my_progress">내 진행 상황</string>
+    <string name="total_practice_count">총 연습 횟수</string>
+    <string name="average_score">평균 점수</string>
+    <string name="pass_rate">합격률</string>
+    <string name="start_ai_driving">AI 도로주행 시작하기</string>
+    <string name="view_my_records">내 기록 보기</string>
+    <string name="quick_access">빠른 액세스</string>
+    <string name="deduction_guide">감점 항목 사전</string>
+    <string name="check_deduction_criteria">감점 기준 확인</string>
+    <string name="my_statistics">내 통계</string>
+    <string name="view_detailed_analysis">상세 분석 보기</string>
+
+    <!-- 마켓플레이스 화면 -->
+    <string name="marketplace">마켓플레이스</string>
+    <string name="average_score_and_pass_rate">평균 점수 및 합격률</string>
+    <string name="recent_ai_feedback">최근 AI 피드백</string>
+    <string name="session_score_format">세션 점수: %d점</string>
+    <string name="recent_driving_sessions">최근 주행 세션</string>
+    <string name="no_sessions_yet">아직 주행 세션이 없습니다.\nAI 도로주행을 시작해보세요!</string>
+    <string name="start_new_session">새 세션 시작</string>
 
     <!-- Dashboard Screen -->
     <string name="driving_performance">Driving Performance</string>
@@ -24,7 +38,6 @@
     <string name="recent_sessions">Recent Sessions</string>
     <string name="view_details">View Details</string>
     <string name="no_recent_sessions">No recent sessions found</string>
-    <string name="average_score">Average Score</string>
     <string name="all_sessions">All Sessions</string>
 
     <!-- Status labels -->
